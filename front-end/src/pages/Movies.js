@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
 import { useState, useEffect, useContext } from "react";
 
 const Movies = () => {
   const [movieData, setMovieData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [addTerm, setAddTerm] = useState("");
-  const [titleData, setTitleData] = useState({title: ""});
+  const [titleData, setTitleData] = useState({ title: "" });
   const [refresh, setRefresh] = useState(false);
 
   //Fetch movie list
@@ -34,29 +34,32 @@ const Movies = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({title: addTerm})
+        body: JSON.stringify({ title: addTerm }),
       });
       toggleRefresh();
-      setAddTerm('');
+      setAddTerm("");
       if (response.status !== 201) {
-        throw new Error
+        throw new Error();
       }
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
+  //Delete MeanGirls from database
   const handleDelete = async (id) => {
     try {
-      let movieDelete = await fetch(`http://localhost:8080/movies/${id}`, {method: "DELETE"})
+      let movieDelete = await fetch(`http://localhost:8080/movies/${id}`, {
+        method: "DELETE",
+      });
       toggleRefresh();
       if (movieDelete.status !== 202) {
-        throw new Error()
+        throw new Error();
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return (
     <>
@@ -110,9 +113,16 @@ const Movies = () => {
           .map((movie) => (
             <div key={movie.id} className="movie-card">
               <h2 className="card-title">{movie.title}</h2>
-              <div className='card-toggles'>
-              <h4>Have watched <input type="checkbox" /></h4> 
-              <h4>Add to watchlist <input type="checkbox" /></h4>
+              <div className="card-toggles">
+                <label>
+                  <input type="checkbox" />
+                  Have watched
+                </label>
+                <p></p>
+                <label>
+                  <input type="checkbox" />
+                  Add to watchlist
+                </label>
               </div>
               <button onClick={() => handleDelete(movie.id)}>Delete</button>
             </div>
@@ -120,6 +130,6 @@ const Movies = () => {
       </div>
     </>
   );
-}
+};
 
-export default Movies
+export default Movies;
