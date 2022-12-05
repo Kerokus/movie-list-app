@@ -110,7 +110,10 @@ const Movies = () => {
           .map((movie) => (
             <div key={movie.id} className="movie-card">
               <h2 className="card-title">{movie.title}</h2>
-              <h4>Have watched</h4>
+              <div className='card-toggles'>
+              <h4>Have watched <input type="checkbox" /></h4> 
+              <h4>Add to watchlist <input type="checkbox" /></h4>
+              </div>
               <button onClick={() => handleDelete(movie.id)}>Delete</button>
             </div>
           ))}
